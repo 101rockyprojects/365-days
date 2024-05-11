@@ -1,0 +1,4 @@
+// GLOBAL VARIABLES
+
+export const PLAYLIST_ID = 'PLNKTZzPnU7TE1tfHvEMbdJBtKHujoBetj';
+export const API_KEY = 'AIzaSyADOOleFDAduMunKLTJTFnE7lHP48ZhbYw';
