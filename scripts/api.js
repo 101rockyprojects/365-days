@@ -65,7 +65,7 @@ async function initialize() {
 }
 
 function showVideo(video) {
-    const videoId = video.id ? video.id : video.snippet.resourceId.videoId;
+    const videoId = video.snippet.resourceId ? video.snippet.resourceId.videoId : video.id;
     const thumbnailUrl = video.snippet.thumbnails.high.url;
     const thumbnailWidth = video.snippet.thumbnails.high.width;
     const thumbnailHeight = video.snippet.thumbnails.high.height;
