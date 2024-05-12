@@ -1,30 +1,353 @@
+:root {
+   --coral: #EF767A;
+   --gummy: #9917FF;
+   --ceil-gray: #29292c;
+   --gray: #1A1A1C;
+   --white: #F2EBE3;
+}
+
 body {
-    margin: 5vw;
+    background-color: var(--gray);
+    margin-top: 2vw;
     font-family: 'Readex Pro', sans-serif;
-    height: 100vh;
+    height: 100%;
 }
 
 .container {
-    text-align: left;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .title {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 3.5em;
+    line-height: 0;
+    color: var(--white);
+}
+
+#today-date {
+    font-size: 0.8em;
+    color: var(--white);
+    margin-bottom: 1em;
+}
+
+#today-date::first-letter {
+    text-transform: uppercase;
+}
+
+.card {
+    background-image: linear-gradient(163deg, #f41111 0%, #3700ff 100%);
+    border-radius: 1.2em;
+    transition: all .3s;
+}
+
+.video-info {
+    display: flex;
+    border-radius: 1em;
+    padding: 1em 2em;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--ceil-gray);
+    box-shadow: 0 5px rgba(0, 0, 0, 0.1);
+    transition: all .2s;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 30px 1px rgba(204, 46, 244, 0.3);
+}
+
+.video-info:hover {
+    transform: scale(0.98);
+    border-radius: 20px;
 }
 
 .video-container {
-    display: flex;
-    align-items: center;
-    text-align: center;
+    flex-direction: column;
+    align-items: left;
 }
 
 .video-container .title {
-    font-size: 1rem;
-    margin-bottom: 20px;
+    width: 100%;
+    display: block;
+    font-size: 1.5em;
+    line-height: 1;
 }
 
-.video-container iframe {
-    width: '640';
-    height: '390';
+.video-element {
+    border-radius: 0.5em;
+}
+
+.today {
+    margin-left: auto;
+    font-size: 1.2em;
+    color: var(--white);
+    align-items: center;
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5em;
+    margin-top: 2.5em;
+}
+
+hr {
+    width: 90%;
+    border-radius: 1em;
+    opacity: 0.2;
+}
+
+.music {
+    margin-top: 0.1em;
+    height: 2.5em;
+    width: 2.5em;
+}
+
+.listen-now {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    position: relative;
+}
+
+.quote {
+    text-align: center;
+    font-family: "Shadows Into Light", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2em;
+    max-width: 40vw;
+}
+
+.btn {
+    border: none;
+    width: 18vw;
+    height: 5em;
+    border-radius: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: #1C1A1C;
+    cursor: pointer;
+    transition: all 450ms ease-in-out;
+}
+
+.play {
+    font-size: 1em;
+    transition: all 800ms ease;
+}
+
+.text {
+    font-family: 'Readex Pro', sans-serif;
+    color: var(--coral);
+    font-size: medium;
+}
+
+.text2 {
+    font-family: 'Readex Pro', sans-serif;
+    color: var(--white);
+    font-size: medium;
+    display: none;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg,#5905b2,#ef1515);
+    transform: translateY(-2px);
+}
+
+.btn:hover .text {
+    color: var(--white);
+}
+
+.btn:hover .play {
+    fill: var(--white);
+    transform: scale(1.2);
+} 
+
+@keyframes blink {
+    0% { opacity: 1; }
+    25% { opacity: 0; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+#title-365::after {
+    content: '|';
+    animation: blink 0.8s infinite;
+    font-weight: 300;
+}
+
+.footer-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    font-size: smaller;
+}
+
+.github-icon {
+    width: 2em;
+    height: 2em;
+}
+
+.footer-container a {
+    text-decoration: none;
+    opacity: 0.5;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+}
+
+.footer-container a:hover {
+    opacity: 1;
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1200px) {
+    body {
+        margin-top: 2.5vw;
+    }
+
+    .title {
+        font-size: 3em;
+    }
+
+    .card {
+        width: 90%;
+        height: 90%;
+        margin-bottom: 2em;
+    }
+
+    .video-element {
+        width: 90%;
+        height: 80%;
+    }
+
+    .btn {
+        width: 22vw;
+        margin-bottom: 1em;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+    body {
+        margin-top: 2vw;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    .card {
+        width: 85%;
+        height: 85%;
+        margin-bottom: 2em;
+    }
+
+    .video-info {
+        flex-direction: column;
+    }
+
+    .video-container {
+        width: 90%;
+        height: 90%;
+    }
+
+    .video-element {
+        width: 100%;
+        height: 80%;
+    }
+
+    .today {
+        margin-left: 1vw;
+        margin-right: 1vw;
+        font-size: 1em;
+    }
+
+    .quote {
+        margin-top: 0;
+        max-width: 80vw;
+        font-size: 1.5em;
+    }
+
+    .btn {
+        width: 30vw;
+        margin-bottom: 1em;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        margin-top: 4vw;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    .card {
+        margin-top: 0.2em;
+        width: 80%;
+        height: 80%;
+    }
+
+    .video-info {
+        flex-direction: column;
+    }
+
+    .video-container {
+        width: 90%;
+        height: 90%;
+    }
+
+    .video-container .title {
+        font-size: 1.11em;
+    }
+
+    .video-element {
+        width: 100%;
+        height: 70%;
+    }
+
+    .today {
+        margin-left: 1vw;
+        margin-right: 1vw;
+        margin-top: 1em;
+        font-size: 0.95em;
+    }
+
+    .quote {
+        margin-top: 0;
+        max-width: 80vw;
+    }
+
+    .btn {
+        border-radius: 50%;
+        width: 5em;
+        height: 5em;
+    }
+
+    .text {
+        display: none;
+    }
+    
+    .text2 {
+        display: block;
+        margin-top: -1em;
+        margin-bottom: 1em;
+    }
 }
