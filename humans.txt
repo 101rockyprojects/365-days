@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Desarrollador
+   ========================================================================== */
+
+101rockyprojects
+   Twitter: @101rockyprojects
+   GitHub: 101rockyprojects
+   Correo electrónico: rockystevendeveloper@gmail.com
+
+/* ==========================================================================
+   Colaboradores
+   ========================================================================== */
+
+Oops, parece que no hay aún, podrías ser el primero.
+
+/* ==========================================================================
+   Agradecimientos
+   ========================================================================== */
+
+Agradecemos a la comunidad de desarrolladores y a las siguientes fuentes de información:
+
+- API de YouTube
+- Google Fonts
