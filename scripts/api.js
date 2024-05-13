@@ -1,3 +1,4 @@
+import { showOopsie } from './error.js';
 import { PLAYLIST_ID, API_KEY } from './globals.js';
 
 if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined' || typeof(window.YT) == 'undefined') {
@@ -23,7 +24,9 @@ async function getTodayVideo(playlistId, apiKey) {
     const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${apiKey}&maxResults=50&pageToken=${nextPageToken}`);
     const data = await response.json();
     const video = data.items[videoIndex];
-
+    if (video.snippet.title === 'Private video' || video.snippet.title === 'Deleted video') {
+        return showOopsie('Oops,', 'Parece que este video fue borrado o se encuentra privado.');
+    }
     return video;
 }
 
@@ -59,14 +62,14 @@ async function initialize() {
         try {
             video = await getVideoById(songParam, API_KEY);
         } catch (error) {
-            console.error("Error al obtener el video por ID:", error);
+            return showOopsie('Vaya,', 'Parece que no se pudo encontrar el video. Comprueba el id.');
         }
     }
     if (!video) {
         try {
             video = await getTodayVideo(PLAYLIST_ID, API_KEY);
         } catch (error) {
-            console.error("Error al obtener el video del día:", error);
+            return showOopsie('Vaya,', 'No se pudo encontrar el video de hoy. Intenta más tarde.');
         }
     }
     loadVideo(video);
@@ -125,7 +128,7 @@ function loadVideo(video) {
       }
     });
     const videoTitle = document.querySelector('.video-title');
-    const loadingGif = document.querySelector('.video-element');
+    const loadingGif = document.querySelector('.loading');
     const todayDateElement = document.getElementById('today-date');
     const youtubeLink = document.querySelector('.listen-now');
     youtubeLink.href = `https://youtube.com/watch?v=${videoId}`;
@@ -140,6 +143,8 @@ function loadVideo(video) {
     const formattedDate = today.toLocaleDateString('es-ES', options);
     todayDateElement.textContent = formattedDate;
     loadingGif.style.display = 'none';
+    document.getElementById('video').style.display = 'block';
+    document.querySelector('.today').style.display = 'flex';
   });
 
   function onPlayerReady(event) {

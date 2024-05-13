@@ -4,11 +4,13 @@
    --ceil-gray: #29292c;
    --gray: #1A1A1C;
    --white: #F2EBE3;
+   --blue-berry: #4c86f9;
+   --amoure: #ec1a1a;
 }
 
 body {
     background-color: var(--gray);
-    margin-top: 2vw;
+    margin-top: 1em;
     font-family: 'Readex Pro', sans-serif;
     height: 100%;
 }
@@ -26,8 +28,8 @@ body {
     width: 100%;
 }
 
-.title {
-    font-size: 3.5em;
+.title-365 {
+    font-size: 4.5em;
     line-height: 0;
     color: var(--white);
 }
@@ -35,6 +37,7 @@ body {
 #today-date {
     font-size: 0.8em;
     color: var(--white);
+    opacity: 0.5;
     margin-bottom: 1em;
 }
 
@@ -48,6 +51,29 @@ body {
     transition: all .3s;
     min-width: 75%;
     max-width: 90%;
+}
+
+.error-title {
+    text-align: center;
+    font-size: calc(1.5em + 1vw);
+    line-height: 0.5;
+    color: var(--amoure);
+}
+
+.error-message {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    font-size: calc(1em + .5vw);
+    margin-bottom: 1em;
+    color: var(--white);
+}
+
+.error-message::first-letter, .error-title::first-letter {
+    text-transform: uppercase;
 }
 
 .video-info {
@@ -65,6 +91,58 @@ body {
     box-shadow: 0px 0px 30px 1px rgba(204, 46, 244, 0.3);
 }
 
+.loading {
+    --speed-of-animation: 0.9s;
+    --gap: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    gap: 6px;
+    height: 200px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+   
+.loading span {
+    width: 4px;
+    height: 50px;
+    background: var(--blue-berry);
+    animation: scale var(--speed-of-animation) ease-in-out infinite;
+}
+   
+.loading span:nth-child(2) {
+    background: var(--amoure);
+    animation-delay: -0.8s;
+}
+   
+.loading span:nth-child(3) {
+    background: var(--gummy);
+    animation-delay: -0.7s;
+}
+   
+.loading span:nth-child(4) {
+    background: var(--amoure);
+    animation-delay: -0.6s;
+}
+   
+.loading span:nth-child(5) {
+    background: var(--blue-berry);
+    animation-delay: -0.5s;
+}
+   
+@keyframes scale {
+    0%, 40%, 100% {
+     transform: scaleY(0.05);
+    }
+   
+    20% {
+     transform: scaleY(1);
+    }
+}
+
 .video-info:hover {
     transform: scale(0.98);
     border-radius: 20px;
@@ -73,8 +151,10 @@ body {
 .video-title {
     width: 100%;
     display: block;
-    font-size: 1.5em;
+    font-size: 1.45em;
     line-height: 1;
+    opacity: 0.85;
+    color: var(--white);
 }
 
 #video {
@@ -87,7 +167,6 @@ body {
     color: var(--white);
     align-items: center;
     margin-left: 1.3vw;
-    margin-right: 1.3vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -124,6 +203,7 @@ hr {
     font-weight: 400;
     font-style: normal;
     font-size: 1.2em;
+    opacity: 0.7;
     max-width: 40vw;
 }
 
@@ -220,8 +300,8 @@ hr {
         margin-top: 2.5vw;
     }
 
-    .title {
-        font-size: 3em;
+    .title-365 {
+        font-size: 4em;
     }
 
     .card {
@@ -243,6 +323,10 @@ hr {
         height: calc(300px - 4.5vw);
     }
 
+    .today {
+        font-size: 1.1em;
+    }
+
     .quote {
         font-size: calc(1em + 0.2vw);
     }
@@ -258,8 +342,8 @@ hr {
         margin-top: 2vw;
     }
 
-    .title {
-        font-size: 2.5em;
+    .title-365 {
+        font-size: 3em;
     }
 
     .card {
@@ -293,7 +377,7 @@ hr {
     .today {
         margin-left: 1vw;
         margin-right: 1vw;
-        font-size: 1em;
+        font-size: 0.92em;
         gap: 1em;
     }
 
@@ -318,8 +402,8 @@ hr {
         margin-top: 4vw;
     }
 
-    .title {
-        font-size: 2.5em;
+    .title-365 {
+        font-size: 3em;
     }
 
     .card {
@@ -355,7 +439,7 @@ hr {
         margin-left: 1vw;
         margin-right: 1vw;
         margin-top: 1em;
-        font-size: 0.95em;
+        font-size: 1em;
         gap: 0.8em;
     }
 
@@ -403,4 +487,16 @@ hr {
         width: 100%;
         height: calc(18vw + 80px);
     }
+}
+
+.blue-berry:hover {
+    color: var(--blue-berry);
+}
+
+.gummy:hover {
+    color: var(--gummy);
+}
+
+.amoure:hover {
+    color: var(--amoure);
 }
