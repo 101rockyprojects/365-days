@@ -1,5 +1,12 @@
 import { PLAYLIST_ID, API_KEY } from './globals.js';
 
+if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined' || typeof(window.YT) == 'undefined') {
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
 async function getTodayVideo(playlistId, apiKey) {
     const today = new Date();
     const dayNumber = getDayNumber(today);
@@ -45,6 +52,7 @@ function getParameterByName(name, url) {
 }
 
 async function initialize() {
+    loadPlayer();
     const songParam = getParameterByName('song');
     let video;
     if (songParam) {
@@ -61,36 +69,87 @@ async function initialize() {
             console.error("Error al obtener el video del día:", error);
         }
     }
-    showVideo(video);
+    loadVideo(video);
 }
 
-function showVideo(video) {
-    const videoId = video.snippet.resourceId ? video.snippet.resourceId.videoId : video.id;
-    const thumbnailUrl = video.snippet.thumbnails.high.url;
-    const thumbnailWidth = video.snippet.thumbnails.high.width;
-    const thumbnailHeight = video.snippet.thumbnails.high.height;
-    const container = document.querySelector('.video-container');
-    const videoTitle = document.createElement('h3');
-    const videoElement = document.querySelector('.video-element');
+function loadPlayer() {
+  window.onYouTubePlayerAPIReady = function() {
+      onYouTubePlayer();
+  };
+}
+
+function onYouTubePlayer(videoId, width, height) {
+  
+  const player = new YT.Player('player', {
+      height: height,
+      width: width,
+      videoId: videoId,
+      playerVars: {
+          controls: 1,
+          showinfo: 0,
+          rel: 0,
+          showsearch: 0,
+          iv_load_policy: 3
+      },
+      events: {
+          'onStateChange': onPlayerStateChange,
+          'onError': catchError
+      }
+  });
+  return player;
+}
+
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING && !done) {
+      done = true;
+  } else if (event.data == YT.PlayerState.ENDED) {
+      location.reload();
+      event.target.destroy();
+  }
+}
+
+function catchError(event) {
+  if (event.data == 100) console.log("...");
+}
+
+function loadVideo(video) {
+  const videoId = video.snippet.resourceId ? video.snippet.resourceId.videoId : video.id;
+  window.YT.ready(function() {
+    new window.YT.Player("video", {
+      height: '283',
+      width: '504',
+      videoId: videoId,
+      events: {
+        onReady: onPlayerReady,
+        onStateChange: onPlayerStateChange
+      }
+    });
+    const videoTitle = document.querySelector('.video-title');
+    const loadingGif = document.querySelector('.video-element');
     const todayDateElement = document.getElementById('today-date');
-    const listenNowLink = document.querySelector('.listen-now');
+    const youtubeLink = document.querySelector('.listen-now');
+    youtubeLink.href = `https://youtube.com/watch?v=${videoId}`;
     videoTitle.classList.add('title');
-    const maxTitleLength = 40;
+    const maxTitleLength = 64;
     const title = video.snippet.title.length > maxTitleLength ? 
-                  video.snippet.title.slice(0, maxTitleLength) + '...' : 
+                  video.snippet.title.slice(0, maxTitleLength - 3) + '...' : 
                   video.snippet.title;
     videoTitle.innerText = title;
-    videoElement.width = thumbnailWidth;
-    videoElement.height = thumbnailHeight;
-    videoElement.src = thumbnailUrl;
-    videoElement.alt = video.snippet.title;
     const today = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = today.toLocaleDateString('es-ES', options);
     todayDateElement.textContent = formattedDate;
-    listenNowLink.href = `https://youtube.com/watch?v=${videoId}`;
-    container.appendChild(videoTitle);
-    container.appendChild(videoElement);
+    loadingGif.style.display = 'none';
+  });
+
+  function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+    // var videoStatuses = Object.entries(window.YT.PlayerState)
+    // console.log(videoStatuses.find(status => status[1] === event.data)[0])
+  }
 }
 
 initialize();
