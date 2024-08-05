@@ -25,7 +25,7 @@ function animateText() {
                             }, 1000);
                         }
                     }, randomTypingTime() * 50 + 50);
-                }, 1000);
+                }, 4000);
             }
         }, randomTypingTime() * 50 + 100);
     }

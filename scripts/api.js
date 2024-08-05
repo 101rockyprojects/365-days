@@ -1,6 +1,10 @@
 import { showOopsie } from './error.js';
 import { PLAYLIST_ID, API_KEY } from './globals.js';
 
+const today = new Date();
+const dayNumber = getDayNumber(today);
+const isBirthday = (dayNumber) === 219; // August 6th
+
 if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined' || typeof(window.YT) == 'undefined') {
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
@@ -9,8 +13,6 @@ if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined' || typeof(wind
 }
 
 async function getTodayVideo(playlistId, apiKey) {
-    const today = new Date();
-    const dayNumber = getDayNumber(today);
     const pageNumber = Math.ceil(dayNumber / 50);
     let actualPage = 1;
     let nextPageToken = '';
@@ -72,7 +74,9 @@ async function initialize() {
             return showOopsie('Vaya,', 'No se pudo encontrar el video de hoy. Intenta más tarde.');
         }
     }
-    loadVideo(video);
+    if (video) {
+      loadVideo(video);
+    }
 }
 
 function loadPlayer() {
@@ -138,13 +142,15 @@ function loadVideo(video) {
                   video.snippet.title.slice(0, maxTitleLength - 3) + '...' : 
                   video.snippet.title;
     videoTitle.innerText = title;
-    const today = new Date();
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = today.toLocaleDateString('es-ES', options);
     todayDateElement.textContent = formattedDate;
     loadingGif.style.display = 'none';
     document.getElementById('video').style.display = 'block';
     document.querySelector('.today').style.display = 'flex';
+    if (isBirthday) {
+      document.querySelector('.confetti').style.display = 'block';
+    }
   });
 
   function onPlayerReady(event) {
